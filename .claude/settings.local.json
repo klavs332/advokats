@@ -3,7 +3,16 @@
     "allow": [
       "Bash(npx create-next-app@latest . --typescript --tailwind --app --no-src-dir --import-alias \"@/*\" --yes)",
       "Bash(npm install:*)",
-      "Bash(npx shadcn@latest init --defaults)"
+      "Bash(npx shadcn@latest init --defaults)",
+      "Bash(npx shadcn@latest add badge input textarea select dropdown-menu --yes)",
+      "Bash(npx tsc:*)",
+      "Bash(grep -l \"PostgrestVersion\" node_modules/@supabase/supabase-js/dist/*.d.ts)",
+      "Bash(npm run:*)",
+      "Bash(node -e \"const next = require\\('next/package.json'\\); console.log\\(next.version\\)\")",
+      "Bash(del \"C:\\\\Users\\\\PC\\\\Documents\\\\advokatam\\\\components\\\\TaskDetailChat.tsx\")",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)"
     ]
   }
 }
