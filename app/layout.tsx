@@ -10,7 +10,7 @@ const font = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Advokatam",
+  title: "Leimanis",
   description: "Task distribution for law firms",
 };
 

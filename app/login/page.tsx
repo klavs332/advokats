@@ -99,7 +99,7 @@ export default function LoginPage() {
                 <path d="M2 12l10 5 10-5"/>
               </svg>
             </div>
-            <span className="text-white font-bold text-xl tracking-tight">Advokatam</span>
+            <span className="text-white font-bold text-xl tracking-tight">Leimanis</span>
           </div>
 
           {/* Center content */}
@@ -141,7 +141,7 @@ export default function LoginPage() {
             </ul>
           </div>
 
-          <p className="text-slate-600 text-xs">© 2026 Advokatam. Visas tiesības aizsargātas.</p>
+          <p className="text-slate-600 text-xs">© 2026 Leimanis. Visas tiesības aizsargātas.</p>
         </div>
       </div>
 
@@ -157,7 +157,7 @@ export default function LoginPage() {
                 <path d="M2 12l10 5 10-5"/>
               </svg>
             </div>
-            <span className="font-bold text-slate-900 text-lg">Advokatam</span>
+            <span className="font-bold text-slate-900 text-lg">Leimanis</span>
           </div>
 
           <div className="mb-7">

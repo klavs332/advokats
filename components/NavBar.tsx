@@ -150,7 +150,7 @@ export function NavBar({ profile }: { profile: Profile }) {
                 <path d="M2 12l10 5 10-5"/>
               </svg>
             </div>
-            <span className="font-semibold text-white tracking-tight text-sm">Advokatam</span>
+            <span className="font-semibold text-white tracking-tight text-sm">Leimanis</span>
           </Link>
 
           {/* Nav links */}
