@@ -15,16 +15,30 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
   const approved = partners.filter(p => p.approved)
 
   async function handleApprove(id: string) {
-    setLoading(id)
+    setLoading(`approve-${id}`)
     await supabase.from('profiles').update({ approved: true }).eq('id', id)
     setPartners(prev => prev.map(p => p.id === id ? { ...p, approved: true } : p))
     setLoading(null)
     router.refresh()
   }
 
-  async function handleReject(id: string) {
-    setLoading(id)
+  async function handleBlock(id: string) {
+    setLoading(`block-${id}`)
     await supabase.from('profiles').update({ approved: false }).eq('id', id)
+    setPartners(prev => prev.map(p => p.id === id ? { ...p, approved: false } : p))
+    setLoading(null)
+    router.refresh()
+  }
+
+  async function handleDelete(id: string, name: string) {
+    if (!confirm(`Vai tiešām dzēst partneri "${name}"? Šī darbība ir neatgriezeniska.`)) return
+    setLoading(`delete-${id}`)
+    const { error } = await supabase.from('profiles').delete().eq('id', id)
+    if (error) {
+      alert(`Kļūda dzēšot: ${error.message}`)
+      setLoading(null)
+      return
+    }
     setPartners(prev => prev.filter(p => p.id !== id))
     setLoading(null)
     router.refresh()
@@ -70,17 +84,17 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
                 <div className="flex gap-2 shrink-0">
                   <button
                     onClick={() => handleApprove(partner.id)}
-                    disabled={loading === partner.id}
+                    disabled={!!loading}
                     className="text-xs bg-slate-950 hover:bg-slate-800 disabled:opacity-50 text-white font-semibold px-3.5 py-2 rounded-xl transition-colors shadow-sm"
                   >
-                    {loading === partner.id ? '...' : 'Apstiprināt'}
+                    {loading === `approve-${partner.id}` ? '...' : 'Apstiprināt'}
                   </button>
                   <button
-                    onClick={() => handleReject(partner.id)}
-                    disabled={loading === partner.id}
+                    onClick={() => handleDelete(partner.id, partner.name)}
+                    disabled={!!loading}
                     className="text-xs bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 font-semibold px-3.5 py-2 rounded-xl border border-red-200 transition-colors"
                   >
-                    Noraidīt
+                    {loading === `delete-${partner.id}` ? '...' : 'Dzēst'}
                   </button>
                 </div>
               </div>
@@ -133,10 +147,26 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
                     )}
                   </div>
                 </div>
-                <span className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-semibold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-                  Aktīvs
-                </span>
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+                    Aktīvs
+                  </span>
+                  <button
+                    onClick={() => handleBlock(partner.id)}
+                    disabled={!!loading}
+                    className="text-xs bg-white hover:bg-slate-50 disabled:opacity-50 text-slate-700 font-semibold px-3 py-1.5 rounded-xl border border-slate-200 transition-colors"
+                  >
+                    {loading === `block-${partner.id}` ? '...' : 'Bloķēt'}
+                  </button>
+                  <button
+                    onClick={() => handleDelete(partner.id, partner.name)}
+                    disabled={!!loading}
+                    className="text-xs bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 font-semibold px-3 py-1.5 rounded-xl border border-red-200 transition-colors"
+                  >
+                    {loading === `delete-${partner.id}` ? '...' : 'Dzēst'}
+                  </button>
+                </div>
               </div>
             ))}
           </div>

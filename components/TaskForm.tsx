@@ -3,22 +3,25 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import type { Profile, Topic } from '@/lib/types'
+import type { Profile, Task, Topic } from '@/lib/types'
 
 interface Props {
   topics: Topic[]
   partners: Profile[]
+  task?: Task
+  existingRecipientIds?: string[]
 }
 
-export function TaskForm({ topics, partners }: Props) {
+export function TaskForm({ topics, partners, task, existingRecipientIds }: Props) {
   const router = useRouter()
   const supabase = createClient()
+  const isEdit = !!task
 
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [amount, setAmount] = useState('')
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([])
-  const [selectedPartners, setSelectedPartners] = useState<string[]>([])
+  const [title, setTitle] = useState(task?.title ?? '')
+  const [description, setDescription] = useState(task?.description ?? '')
+  const [amount, setAmount] = useState(task ? String(task.amount) : '')
+  const [selectedCategories, setSelectedCategories] = useState<string[]>(task?.categories ?? [])
+  const [selectedPartners, setSelectedPartners] = useState<string[]>(existingRecipientIds ?? [])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -57,7 +60,45 @@ export function TaskForm({ topics, partners }: Props) {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { setError('Nav autorizācijas'); setLoading(false); return }
 
-    const { data: task, error: taskError } = await supabase
+    if (isEdit && task) {
+      const { error: updateError } = await supabase
+        .from('tasks')
+        .update({
+          title: title.trim(),
+          description: description.trim(),
+          amount: parseFloat(amount) || 0,
+          categories: selectedCategories,
+          status: asDraft ? 'draft' : (task.status === 'draft' ? 'sent' : task.status),
+        })
+        .eq('id', task.id)
+
+      if (updateError) {
+        setError(updateError.message)
+        setLoading(false)
+        return
+      }
+
+      const existing = new Set(existingRecipientIds ?? [])
+      const selected = new Set(selectedPartners)
+      const toRemove = [...existing].filter(id => !selected.has(id))
+      const toAdd = [...selected].filter(id => !existing.has(id))
+
+      if (toRemove.length > 0) {
+        await supabase.from('task_recipients').delete()
+          .eq('task_id', task.id).in('partner_id', toRemove)
+      }
+      if (toAdd.length > 0) {
+        await supabase.from('task_recipients').insert(
+          toAdd.map(partnerId => ({ task_id: task.id, partner_id: partnerId }))
+        )
+      }
+
+      router.push(`/tasks/${task.id}`)
+      router.refresh()
+      return
+    }
+
+    const { data: newTask, error: taskError } = await supabase
       .from('tasks')
       .insert({
         title: title.trim(),
@@ -70,7 +111,7 @@ export function TaskForm({ topics, partners }: Props) {
       .select()
       .single()
 
-    if (taskError || !task) {
+    if (taskError || !newTask) {
       setError(taskError?.message ?? 'Kļūda saglabājot')
       setLoading(false)
       return
@@ -79,13 +120,13 @@ export function TaskForm({ topics, partners }: Props) {
     if (!asDraft && selectedPartners.length > 0) {
       await supabase.from('task_recipients').insert(
         selectedPartners.map(partnerId => ({
-          task_id: task.id,
+          task_id: newTask.id,
           partner_id: partnerId,
         }))
       )
     }
 
-    router.push(`/tasks/${task.id}`)
+    router.push(`/tasks/${newTask.id}`)
     router.refresh()
   }
 
@@ -274,27 +315,50 @@ export function TaskForm({ topics, partners }: Props) {
 
       {/* Actions */}
       <div className="flex gap-3">
-        <button
-          type="button"
-          onClick={e => handleSubmit(e, true)}
-          disabled={loading}
-          className="bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
-        >
-          Saglabāt kā melnrakstu
-        </button>
-        <button
-          type="button"
-          onClick={e => handleSubmit(e, false)}
-          disabled={loading}
-          className="flex-1 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
-        >
-          {loading
-            ? 'Sūta...'
-            : selectedPartners.length > 0
-              ? `Izsūtīt ${selectedPartners.length} partneriem`
-              : 'Izsūtīt partneriem'
-          }
-        </button>
+        {isEdit ? (
+          <>
+            <button
+              type="button"
+              onClick={() => router.push(`/tasks/${task!.id}`)}
+              disabled={loading}
+              className="bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+            >
+              Atcelt
+            </button>
+            <button
+              type="button"
+              onClick={e => handleSubmit(e, false)}
+              disabled={loading}
+              className="flex-1 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+            >
+              {loading ? 'Saglabā...' : 'Saglabāt izmaiņas'}
+            </button>
+          </>
+        ) : (
+          <>
+            <button
+              type="button"
+              onClick={e => handleSubmit(e, true)}
+              disabled={loading}
+              className="bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+            >
+              Saglabāt kā melnrakstu
+            </button>
+            <button
+              type="button"
+              onClick={e => handleSubmit(e, false)}
+              disabled={loading}
+              className="flex-1 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+            >
+              {loading
+                ? 'Sūta...'
+                : selectedPartners.length > 0
+                  ? `Izsūtīt ${selectedPartners.length} partneriem`
+                  : 'Izsūtīt partneriem'
+              }
+            </button>
+          </>
+        )}
       </div>
     </form>
   )

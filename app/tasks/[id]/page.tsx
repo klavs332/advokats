@@ -5,6 +5,7 @@ import { PartnerStatusDropdown } from '@/components/PartnerStatusDropdown'
 import { ChatThread } from '@/components/ChatThread'
 import { ProposalForm } from '@/components/ProposalForm'
 import { ProposalList } from '@/components/ProposalList'
+import { DeleteTaskButton } from '@/components/DeleteTaskButton'
 import Link from 'next/link'
 import type { MessageWithSender, ProposalWithPartner, TaskWithRecipients } from '@/lib/types'
 
@@ -93,6 +94,17 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ id:
                     <span className={`w-1.5 h-1.5 rounded-full ${status.dot}`} />
                     {status.label}
                   </span>
+                  {profile.role === 'admin' && (
+                    <div className="flex items-center gap-2 ml-auto shrink-0">
+                      <Link
+                        href={`/tasks/${id}/edit`}
+                        className="text-xs bg-white hover:bg-slate-50 text-slate-700 font-semibold px-3 py-1.5 rounded-xl border border-slate-200 transition-colors"
+                      >
+                        Rediģēt
+                      </Link>
+                      <DeleteTaskButton taskId={id} taskTitle={typedTask.title} />
+                    </div>
+                  )}
                 </div>
 
                 <p className="text-xs text-slate-400 mb-4 font-medium">{formatDate(typedTask.created_at)}</p>
