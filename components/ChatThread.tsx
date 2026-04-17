@@ -139,12 +139,12 @@ export function ChatThread({ taskId, initialMessages, profile, recipients }: Pro
                 const isMe = msg.sender_id === profile.id
                 return (
                   <div key={msg.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[72%] ${isMe ? '' : 'flex gap-2.5 items-end'}`}>
+                    <div className={`max-w-[85%] sm:max-w-[72%] ${isMe ? '' : 'flex gap-2.5 items-end'}`}>
                       {/* Avatar for others */}
                       {!isMe && (
                         <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold shrink-0 mb-1 ${
                           msg.profiles?.role === 'admin'
-                            ? 'bg-amber-500 text-white'
+                            ? 'bg-[var(--brand)] text-[var(--brand-foreground)]'
                             : 'bg-slate-200 text-slate-600'
                         }`}>
                           {msg.profiles?.name?.charAt(0).toUpperCase()}
@@ -156,7 +156,7 @@ export function ChatThread({ taskId, initialMessages, profile, recipients }: Pro
                           <p className="text-xs text-slate-400 mb-1 ml-1 font-medium">
                             {msg.profiles?.name}
                             {msg.profiles?.role === 'admin' && (
-                              <span className="ml-1 text-amber-600">· Advokāts</span>
+                              <span className="ml-1 text-[var(--brand-hover)]">· Advokāts</span>
                             )}
                           </p>
                         )}
@@ -197,7 +197,7 @@ export function ChatThread({ taskId, initialMessages, profile, recipients }: Pro
           onKeyDown={e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } }}
           placeholder="Rakstiet ziņu... (Enter = sūtīt)"
           rows={2}
-          className="flex-1 resize-none bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
+          className="flex-1 resize-none bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all"
         />
         <button
           onClick={sendMessage}

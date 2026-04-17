@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { NavBar } from '@/components/NavBar'
 import { PartnerProfileForm } from '@/components/PartnerProfileForm'
+import { Container } from '@/components/ui/container'
 
 export default async function SettingsPage() {
   const supabase = await createClient()
@@ -14,14 +15,16 @@ export default async function SettingsPage() {
   const { data: topics } = await supabase.from('topics').select('*').order('name')
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--paper)]">
       <NavBar profile={profile} />
-      <main className="max-w-2xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-bold text-slate-900">Mans profils</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Atjauniniet savu informāciju un specializācijas jomas</p>
-        </div>
-        <PartnerProfileForm profile={profile} topics={topics ?? []} />
+      <main className="py-6 sm:py-10">
+        <Container size="narrow">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-display text-slate-900">Mans profils</h1>
+            <p className="text-sm text-slate-500 mt-1">Atjauniniet savu informāciju un specializācijas jomas</p>
+          </div>
+          <PartnerProfileForm profile={profile} topics={topics ?? []} />
+        </Container>
       </main>
     </div>
   )

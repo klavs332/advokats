@@ -2,6 +2,7 @@ import { redirect, notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { NavBar } from '@/components/NavBar'
 import { TaskForm } from '@/components/TaskForm'
+import { Container } from '@/components/ui/container'
 
 export default async function EditTaskPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
@@ -27,19 +28,21 @@ export default async function EditTaskPage({ params }: { params: Promise<{ id: s
   if (!task) notFound()
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--paper)]">
       <NavBar profile={profile} />
-      <main className="max-w-2xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-bold text-slate-900">Rediģēt uzdevumu</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Atjauniniet uzdevuma informāciju un saņēmējus</p>
-        </div>
-        <TaskForm
-          topics={topics ?? []}
-          partners={partners ?? []}
-          task={task}
-          existingRecipientIds={(recipients ?? []).map(r => r.partner_id)}
-        />
+      <main className="py-6 sm:py-10">
+        <Container size="narrow">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-display text-slate-900">Rediģēt uzdevumu</h1>
+            <p className="text-sm text-slate-500 mt-1">Atjauniniet uzdevuma informāciju un saņēmējus</p>
+          </div>
+          <TaskForm
+            topics={topics ?? []}
+            partners={partners ?? []}
+            task={task}
+            existingRecipientIds={(recipients ?? []).map(r => r.partner_id)}
+          />
+        </Container>
       </main>
     </div>
   )

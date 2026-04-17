@@ -66,20 +66,20 @@ export function TopicManager({ topics: initialTopics }: { topics: Topic[] }) {
       {/* Add form */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2.5">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
+          <div className="w-2 h-2 rounded-full bg-[var(--brand)]" />
           <h2 className="text-sm font-semibold text-slate-700">Pievienot tēmu</h2>
         </div>
-        <form onSubmit={handleAdd} className="p-5 flex gap-3">
+        <form onSubmit={handleAdd} className="p-4 sm:p-5 flex flex-col sm:flex-row gap-2.5 sm:gap-3">
           <input
             value={newName}
             onChange={e => { setNewName(e.target.value); setError('') }}
             placeholder="Jaunas tēmas nosaukums..."
-            className="flex-1 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
+            className="flex-1 h-11 sm:h-10 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all"
           />
           <button
             type="submit"
             disabled={loading || !newName.trim()}
-            className="bg-slate-950 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-5 py-2.5 rounded-xl text-sm transition-colors shadow-sm shrink-0"
+            className="h-11 sm:h-10 bg-slate-950 hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed text-white font-semibold px-5 rounded-xl text-sm transition-colors shadow-sm shrink-0"
           >
             {loading ? 'Pievieno...' : 'Pievienot'}
           </button>
@@ -128,7 +128,7 @@ export function TopicManager({ topics: initialTopics }: { topics: Topic[] }) {
                 <button
                   onClick={() => handleDelete(topic.id, topic.name)}
                   disabled={deleting === topic.id}
-                  className="text-xs text-slate-300 hover:text-red-600 disabled:opacity-50 font-medium opacity-0 group-hover:opacity-100 transition-all px-2.5 py-1 rounded-lg hover:bg-red-50 border border-transparent hover:border-red-200"
+                  className="text-xs text-slate-400 hover:text-red-600 disabled:opacity-50 font-medium sm:opacity-0 sm:group-hover:opacity-100 transition-all px-2.5 py-1 rounded-lg hover:bg-red-50 border border-transparent hover:border-red-200"
                 >
                   {deleting === topic.id ? '...' : 'Dzēst'}
                 </button>

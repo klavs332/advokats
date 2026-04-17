@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { NavBar } from '@/components/NavBar'
 import { TaskForm } from '@/components/TaskForm'
+import { Container } from '@/components/ui/container'
 
 export default async function NewTaskPage() {
   const supabase = await createClient()
@@ -22,14 +23,16 @@ export default async function NewTaskPage() {
   ])
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--paper)]">
       <NavBar profile={profile} />
-      <main className="max-w-2xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-bold text-slate-900">Jauns uzdevums</h1>
-          <p className="text-sm text-slate-500 mt-0.5">Izveidojiet un izsūtiet uzdevumu partneriem</p>
-        </div>
-        <TaskForm topics={topics ?? []} partners={partners ?? []} />
+      <main className="py-6 sm:py-10">
+        <Container size="narrow">
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-display text-slate-900">Jauns uzdevums</h1>
+            <p className="text-sm text-slate-500 mt-1">Izveidojiet un izsūtiet uzdevumu partneriem</p>
+          </div>
+          <TaskForm topics={topics ?? []} partners={partners ?? []} />
+        </Container>
       </main>
     </div>
   )

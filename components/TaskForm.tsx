@@ -165,7 +165,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
               value={title}
               onChange={e => setTitle(e.target.value)}
               placeholder="Uzdevuma nosaukums"
-              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all font-medium"
+              className="w-full h-11 sm:h-10 px-3.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all font-medium"
             />
           </div>
 
@@ -176,7 +176,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
               onChange={e => setDescription(e.target.value)}
               placeholder="Detalizēts uzdevuma apraksts, prasības, termiņi..."
               rows={5}
-              className="w-full resize-none px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
+              className="w-full resize-none px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all"
             />
           </div>
 
@@ -191,7 +191,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
                 placeholder="0.00"
                 min="0"
                 step="0.01"
-                className="w-48 pl-8 pr-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all font-semibold"
+                className="w-full sm:w-48 h-11 sm:h-10 pl-8 pr-3.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all font-semibold"
               />
             </div>
           </div>
@@ -201,10 +201,10 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
       {/* Categories */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-5 py-4 border-b border-slate-100 flex items-center gap-2.5">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
+          <div className="w-2 h-2 rounded-full bg-[var(--brand)]" />
           <span className="text-sm font-semibold text-slate-700">Kategorijas</span>
           {selectedCategories.length > 0 && (
-            <span className="ml-auto bg-amber-50 text-amber-700 text-xs px-2 py-0.5 rounded-full font-semibold border border-amber-200">
+            <span className="ml-auto bg-[var(--brand-soft)] text-[var(--brand-hover)] text-xs px-2 py-0.5 rounded-full font-semibold border border-[var(--brand)]/25">
               {selectedCategories.length} izvēlētas
             </span>
           )}
@@ -269,7 +269,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
                 value={search}
                 onChange={e => setSearch(e.target.value)}
                 placeholder="Meklēt partneri pēc vārda..."
-                className="w-full pl-9 pr-3 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
+                className="w-full h-11 sm:h-10 pl-9 pr-3 bg-white border border-slate-200 rounded-lg text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all"
               />
               {search && (
                 <button
@@ -371,14 +371,14 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
       )}
 
       {/* Actions */}
-      <div className="flex gap-3">
+      <div className="flex flex-col-reverse sm:flex-row gap-2.5 sm:gap-3 sticky bottom-0 pt-2 pb-1 bg-gradient-to-t from-[var(--paper)] via-[var(--paper)] to-transparent">
         {isEdit ? (
           <>
             <button
               type="button"
               onClick={() => router.push(`/tasks/${task!.id}`)}
               disabled={loading}
-              className="bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+              className="w-full sm:w-auto h-12 sm:h-11 bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold px-5 rounded-xl text-sm transition-colors shadow-sm"
             >
               Atcelt
             </button>
@@ -386,7 +386,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
               type="button"
               onClick={e => handleSubmit(e, false)}
               disabled={loading}
-              className="flex-1 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+              className="w-full sm:flex-1 h-12 sm:h-11 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 rounded-xl text-sm transition-colors shadow-card"
             >
               {loading ? 'Saglabā...' : 'Saglabāt izmaiņas'}
             </button>
@@ -397,7 +397,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
               type="button"
               onClick={e => handleSubmit(e, true)}
               disabled={loading}
-              className="bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+              className="w-full sm:w-auto h-12 sm:h-11 bg-white hover:bg-slate-50 disabled:opacity-50 border border-slate-200 text-slate-700 font-semibold px-5 rounded-xl text-sm transition-colors shadow-sm"
             >
               Saglabāt kā melnrakstu
             </button>
@@ -405,7 +405,7 @@ export function TaskForm({ topics, partners, task, existingRecipientIds }: Props
               type="button"
               onClick={e => handleSubmit(e, false)}
               disabled={loading}
-              className="flex-1 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-5 rounded-xl text-sm transition-colors shadow-sm"
+              className="w-full sm:flex-1 h-12 sm:h-11 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-5 rounded-xl text-sm transition-colors shadow-card"
             >
               {loading
                 ? 'Sūta...'

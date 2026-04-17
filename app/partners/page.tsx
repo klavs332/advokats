@@ -2,6 +2,7 @@ import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { NavBar } from '@/components/NavBar'
 import { PartnerList } from '@/components/PartnerList'
+import { Container } from '@/components/ui/container'
 
 export default async function PartnersPage() {
   const supabase = await createClient()
@@ -23,16 +24,18 @@ export default async function PartnersPage() {
     .order('created_at', { ascending: false })
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <div className="min-h-screen bg-[var(--paper)]">
       <NavBar profile={profile} />
-      <main className="max-w-5xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <h1 className="text-xl font-bold text-slate-900">Partneri</h1>
-          <p className="text-sm text-slate-500 mt-0.5">
-            Pārvaldiet partneru pieteikumus un aktīvos sadarbības partnerus
-          </p>
-        </div>
-        <PartnerList partners={partners ?? []} />
+      <main className="py-6 sm:py-10">
+        <Container>
+          <div className="mb-6 sm:mb-8">
+            <h1 className="text-display text-slate-900">Partneri</h1>
+            <p className="text-sm text-slate-500 mt-1">
+              Pārvaldiet partneru pieteikumus un aktīvos sadarbības partnerus
+            </p>
+          </div>
+          <PartnerList partners={partners ?? []} />
+        </Container>
       </main>
     </div>
   )

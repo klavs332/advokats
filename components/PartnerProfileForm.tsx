@@ -82,7 +82,7 @@ export function PartnerProfileForm({ profile, topics }: { profile: Profile; topi
               onChange={e => { setName(e.target.value); setSaved(false) }}
               required
               placeholder="Juris Bērziņš"
-              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
+              className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all"
             />
           </div>
 
@@ -117,7 +117,7 @@ export function PartnerProfileForm({ profile, topics }: { profile: Profile; topi
               placeholder="0.00"
               min="0"
               step="0.01"
-              className="w-48 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
+              className="w-full sm:w-48 px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-300 focus:border-slate-300 transition-all"
             />
           </div>
         </div>
@@ -154,10 +154,10 @@ export function PartnerProfileForm({ profile, topics }: { profile: Profile; topi
       {/* Topics */}
       <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-slate-100 flex items-center gap-2.5">
-          <div className="w-2 h-2 rounded-full bg-amber-400" />
+          <div className="w-2 h-2 rounded-full bg-[var(--brand)]" />
           <h2 className="text-sm font-semibold text-slate-700">Specializācijas tēmas</h2>
           {selectedTopics.length > 0 && (
-            <span className="ml-auto bg-amber-50 text-amber-700 text-xs px-2 py-0.5 rounded-full font-semibold border border-amber-200">
+            <span className="ml-auto bg-[var(--brand-soft)] text-[var(--brand-hover)] text-xs px-2 py-0.5 rounded-full font-semibold border border-[var(--brand)]/25">
               {selectedTopics.length} izvēlētas
             </span>
           )}
@@ -191,11 +191,11 @@ export function PartnerProfileForm({ profile, topics }: { profile: Profile; topi
       </div>
 
       {/* Save button */}
-      <div className="flex items-center gap-3">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3">
         <button
           type="submit"
           disabled={saving}
-          className="bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 rounded-xl text-sm transition-colors shadow-sm"
+          className="w-full sm:w-auto h-12 sm:h-11 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-6 rounded-xl text-sm transition-colors shadow-card"
         >
           {saving ? 'Saglabā...' : 'Saglabāt izmaiņas'}
         </button>

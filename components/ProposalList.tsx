@@ -54,7 +54,7 @@ export function ProposalList({ taskId, proposals: initial }: { taskId: string; p
   return (
     <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
       <div className="px-5 py-3.5 border-b border-slate-100 flex items-center gap-2.5">
-        <div className="w-2 h-2 rounded-full bg-amber-400" />
+        <div className="w-2 h-2 rounded-full bg-[var(--brand)]" />
         <h3 className="text-sm font-semibold text-slate-700">Piedāvājumi</h3>
         <span className="ml-1 bg-slate-100 text-slate-500 text-xs px-2 py-0.5 rounded-full font-medium">{proposals.length}</span>
       </div>
@@ -69,7 +69,7 @@ export function ProposalList({ taskId, proposals: initial }: { taskId: string; p
           return (
             <div
               key={p.id}
-              className={`px-5 py-4 flex items-start justify-between gap-4 transition-colors ${
+              className={`px-4 sm:px-5 py-4 flex flex-col sm:flex-row sm:items-start justify-between gap-3 sm:gap-4 transition-colors ${
                 isAccepted ? 'bg-emerald-50/50' : isRejected ? 'opacity-60' : ''
               }`}
             >
@@ -110,7 +110,7 @@ export function ProposalList({ taskId, proposals: initial }: { taskId: string; p
                   {/* Message */}
                   {p.message && (
                     <div className="bg-slate-50 border border-slate-200 rounded-lg px-3 py-2 mb-2">
-                      <p className="text-xs text-slate-600 italic leading-relaxed">"{p.message}"</p>
+                      <p className="text-xs text-slate-600 italic leading-relaxed">&ldquo;{p.message}&rdquo;</p>
                     </div>
                   )}
 
@@ -126,8 +126,8 @@ export function ProposalList({ taskId, proposals: initial }: { taskId: string; p
               </div>
 
               {/* Amount + action */}
-              <div className="flex flex-col items-end gap-2.5 shrink-0">
-                <span className="text-xl font-bold text-slate-900 tabular-nums">{formatAmount(p.amount)}</span>
+              <div className="flex sm:flex-col items-center sm:items-end justify-between sm:justify-start gap-2.5 shrink-0 pt-3 sm:pt-0 border-t sm:border-t-0 border-slate-100">
+                <span className="font-display text-xl sm:text-2xl font-semibold text-slate-900 tabular-nums tracking-tight">{formatAmount(p.amount)}</span>
 
                 {isAccepted && (
                   <span className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-3 py-1 rounded-full font-semibold">
@@ -146,7 +146,7 @@ export function ProposalList({ taskId, proposals: initial }: { taskId: string; p
                   <button
                     onClick={() => handleAccept(p.id, p.partner_id)}
                     disabled={loading === p.id}
-                    className="text-xs bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-4 py-2 rounded-xl transition-colors shadow-sm"
+                    className="text-xs h-10 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-4 rounded-xl transition-colors shadow-card"
                   >
                     {loading === p.id ? 'Apstrādā...' : 'Pieņemt'}
                   </button>

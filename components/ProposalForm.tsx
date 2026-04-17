@@ -58,20 +58,20 @@ export function ProposalForm({ taskId, existingProposal }: Props) {
 
   if (existingProposal?.status === 'pending') {
     return (
-      <div className="bg-amber-50 border border-amber-200 rounded-2xl p-5 shadow-sm">
+      <div className="bg-[var(--brand-soft)] border border-[var(--brand)]/25 rounded-2xl p-5 shadow-card">
         <div className="flex items-start gap-3">
-          <div className="w-9 h-9 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center shrink-0">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D97706" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <div className="w-9 h-9 rounded-full bg-white border border-[var(--brand)]/25 flex items-center justify-center shrink-0">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--brand)" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
             </svg>
           </div>
           <div className="flex-1">
-            <p className="font-semibold text-amber-800 text-sm">Piedāvājums nosūtīts — gaida lēmumu</p>
-            <p className="text-xs text-amber-700 mt-1">
+            <p className="font-semibold text-[var(--brand-hover)] text-sm">Piedāvājums nosūtīts — gaida lēmumu</p>
+            <p className="text-xs text-[var(--brand-hover)]/90 mt-1">
               Jūsu summa: <span className="font-bold">€{existingProposal.amount}</span>
             </p>
             {existingProposal.message && (
-              <p className="text-xs text-amber-600 mt-1 italic">"{existingProposal.message}"</p>
+              <p className="text-xs text-[var(--brand-hover)]/80 mt-1 italic">&ldquo;{existingProposal.message}&rdquo;</p>
             )}
           </div>
         </div>
@@ -116,7 +116,7 @@ export function ProposalForm({ taskId, existingProposal }: Props) {
             min="0"
             step="0.01"
             required
-            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all font-semibold"
+            className="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-base sm:text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all font-semibold"
           />
         </div>
       </div>
@@ -128,7 +128,7 @@ export function ProposalForm({ taskId, existingProposal }: Props) {
           onChange={e => setMessage(e.target.value)}
           placeholder="Īss apraksts, kāpēc esat piemērots šim uzdevumam..."
           rows={3}
-          className="w-full resize-none px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-500 transition-all"
+          className="w-full resize-none px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-[var(--brand)]/30 focus:border-[var(--brand)] transition-all"
         />
       </div>
 
@@ -144,7 +144,7 @@ export function ProposalForm({ taskId, existingProposal }: Props) {
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold py-2.5 px-4 rounded-xl text-sm transition-colors shadow-sm"
+        className="w-full h-12 sm:h-11 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold px-4 rounded-xl text-sm transition-colors shadow-card"
       >
         {loading ? 'Sūta...' : 'Nosūtīt piedāvājumu'}
       </button>

@@ -37,7 +37,7 @@ function groupByDate(msgs: MessageWithSender[]) {
 }
 
 const STATUS_DOT: Record<string, string> = {
-  draft: 'bg-amber-400',
+  draft: 'bg-[var(--brand)]',
   sent: 'bg-emerald-400',
   assigned: 'bg-blue-400',
 }
@@ -252,14 +252,14 @@ export function ChatSidebar({ profile, open, onClose }: Props) {
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 z-30 bg-slate-950/20 backdrop-blur-[2px]"
+          className="fixed inset-0 z-40 bg-slate-950/40 backdrop-blur-sm transition-opacity"
           onClick={onClose}
         />
       )}
 
       {/* Sidebar panel */}
       <div
-        className={`fixed top-0 right-0 h-screen w-80 bg-white z-40 flex flex-col shadow-2xl border-l border-slate-200 transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-[100dvh] w-full sm:w-96 lg:w-[28rem] bg-white z-50 flex flex-col shadow-elevated border-l border-slate-200 transition-transform duration-300 ease-in-out ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -271,7 +271,7 @@ export function ChatSidebar({ profile, open, onClose }: Props) {
               <div className="flex items-center gap-2">
                 <span className="text-sm font-bold text-slate-900">Sarakste</span>
                 {totalUnread > 0 && (
-                  <span className="bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
+                  <span className="bg-[var(--brand)] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none">
                     {totalUnread > 99 ? '99+' : totalUnread}
                   </span>
                 )}
@@ -369,7 +369,7 @@ export function ChatSidebar({ profile, open, onClose }: Props) {
 
                       {/* Unread badge */}
                       {unread > 0 && (
-                        <span className="shrink-0 bg-amber-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none mt-1">
+                        <span className="shrink-0 bg-[var(--brand)] text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center leading-none mt-1">
                           {unread}
                         </span>
                       )}
@@ -446,7 +446,7 @@ export function ChatSidebar({ profile, open, onClose }: Props) {
                           <div className={`max-w-[85%] ${isMe ? '' : 'flex gap-1.5 items-end'}`}>
                             {!isMe && (
                               <div className={`w-5 h-5 rounded-full flex items-center justify-center text-[9px] font-bold shrink-0 mb-0.5 ${
-                                msg.profiles?.role === 'admin' ? 'bg-amber-500 text-white' : 'bg-slate-300 text-slate-600'
+                                msg.profiles?.role === 'admin' ? 'bg-[var(--brand)] text-white' : 'bg-slate-300 text-slate-600'
                               }`}>
                                 {msg.profiles?.name?.charAt(0).toUpperCase()}
                               </div>
@@ -455,7 +455,7 @@ export function ChatSidebar({ profile, open, onClose }: Props) {
                               {!isMe && (
                                 <p className="text-[10px] text-slate-400 mb-0.5 ml-0.5 font-medium">
                                   {msg.profiles?.name?.split(' ')[0]}
-                                  {msg.profiles?.role === 'admin' && <span className="text-amber-500 ml-1">·</span>}
+                                  {msg.profiles?.role === 'admin' && <span className="text-[var(--brand)] ml-1">·</span>}
                                 </p>
                               )}
                               <div className={`rounded-2xl px-3 py-1.5 text-xs shadow-sm ${

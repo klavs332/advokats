@@ -54,21 +54,21 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
       {pending.length > 0 && (
         <div>
           <div className="flex items-center gap-2 mb-3">
-            <span className="w-2 h-2 rounded-full bg-amber-400" />
+            <span className="w-2 h-2 rounded-full bg-[var(--brand)]" />
             <h2 className="text-sm font-semibold text-slate-700">Gaida apstiprinājumu</h2>
-            <span className="bg-amber-100 text-amber-700 text-xs px-2 py-0.5 rounded-full font-semibold border border-amber-200">
+            <span className="bg-[var(--brand-soft)] text-[var(--brand-hover)] text-xs px-2 py-0.5 rounded-full font-semibold border border-[var(--brand)]/25">
               {pending.length}
             </span>
           </div>
-          <div className="bg-white rounded-2xl border border-amber-200 shadow-sm overflow-hidden divide-y divide-amber-100">
+          <div className="bg-white rounded-2xl border border-[var(--brand)]/25 shadow-card overflow-hidden divide-y divide-[var(--brand)]/10">
             {pending.map(partner => (
-              <div key={partner.id} className="flex items-center justify-between px-5 py-4 bg-amber-50/30 hover:bg-amber-50/50 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-amber-100 border border-amber-200 flex items-center justify-center text-sm font-bold text-amber-700 shrink-0">
+              <div key={partner.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-5 py-4 bg-[var(--brand-soft)]/40 hover:bg-[var(--brand-soft)]/70 transition-colors">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-full bg-white border border-[var(--brand)]/25 flex items-center justify-center text-sm font-bold text-[var(--brand-hover)] shrink-0">
                     {getInitials(partner.name)}
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">{partner.name}</p>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 truncate">{partner.name}</p>
                     <p className="text-xs text-slate-400 mt-0.5">
                       Reģistrējās {new Date(partner.created_at).toLocaleDateString('lv-LV', { day: 'numeric', month: 'long', year: 'numeric' })}
                     </p>
@@ -85,14 +85,14 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
                   <button
                     onClick={() => handleApprove(partner.id)}
                     disabled={!!loading}
-                    className="text-xs bg-slate-950 hover:bg-slate-800 disabled:opacity-50 text-white font-semibold px-3.5 py-2 rounded-xl transition-colors shadow-sm"
+                    className="flex-1 sm:flex-none text-xs h-10 sm:h-9 bg-slate-950 hover:bg-slate-800 disabled:opacity-50 text-white font-semibold px-4 rounded-xl transition-colors shadow-sm"
                   >
                     {loading === `approve-${partner.id}` ? '...' : 'Apstiprināt'}
                   </button>
                   <button
                     onClick={() => handleDelete(partner.id, partner.name)}
                     disabled={!!loading}
-                    className="text-xs bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 font-semibold px-3.5 py-2 rounded-xl border border-red-200 transition-colors"
+                    className="flex-1 sm:flex-none text-xs h-10 sm:h-9 bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 font-semibold px-4 rounded-xl border border-red-200 transition-colors"
                   >
                     {loading === `delete-${partner.id}` ? '...' : 'Dzēst'}
                   </button>
@@ -126,13 +126,13 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
         ) : (
           <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden divide-y divide-slate-100">
             {approved.map(partner => (
-              <div key={partner.id} className="flex items-center justify-between px-5 py-4 hover:bg-slate-50/50 transition-colors">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-slate-800 flex items-center justify-center text-sm font-bold text-white shrink-0">
+              <div key={partner.id} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-5 py-4 hover:bg-slate-50/60 transition-colors">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-sm font-bold text-white shrink-0">
                     {getInitials(partner.name)}
                   </div>
-                  <div>
-                    <p className="text-sm font-semibold text-slate-900">{partner.name}</p>
+                  <div className="min-w-0">
+                    <p className="text-sm font-semibold text-slate-900 truncate">{partner.name}</p>
                     {partner.topics.length > 0 ? (
                       <div className="flex gap-1 mt-1 flex-wrap">
                         {partner.topics.slice(0, 4).map(t => (
@@ -147,7 +147,7 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
                     )}
                   </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0">
+                <div className="flex items-center gap-2 shrink-0 flex-wrap">
                   <span className="inline-flex items-center gap-1.5 text-xs bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-1 rounded-full font-semibold">
                     <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                     Aktīvs
@@ -155,14 +155,14 @@ export function PartnerList({ partners: initialPartners }: { partners: Profile[]
                   <button
                     onClick={() => handleBlock(partner.id)}
                     disabled={!!loading}
-                    className="text-xs bg-white hover:bg-slate-50 disabled:opacity-50 text-slate-700 font-semibold px-3 py-1.5 rounded-xl border border-slate-200 transition-colors"
+                    className="text-xs h-9 bg-white hover:bg-slate-50 disabled:opacity-50 text-slate-700 font-semibold px-3 rounded-xl border border-slate-200 transition-colors"
                   >
                     {loading === `block-${partner.id}` ? '...' : 'Bloķēt'}
                   </button>
                   <button
                     onClick={() => handleDelete(partner.id, partner.name)}
                     disabled={!!loading}
-                    className="text-xs bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 font-semibold px-3 py-1.5 rounded-xl border border-red-200 transition-colors"
+                    className="text-xs h-9 bg-red-50 hover:bg-red-100 disabled:opacity-50 text-red-700 font-semibold px-3 rounded-xl border border-red-200 transition-colors"
                   >
                     {loading === `delete-${partner.id}` ? '...' : 'Dzēst'}
                   </button>
